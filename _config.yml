@@ -1,0 +1,196 @@
+# External gems
+# See http://ixti.net/software/2013/01/28/using-jekyll-plugins-on-github-pages.html for making `jekyll archives` work.
+gems:
+  - jekyll-sitemap
+  - jekyll-paginate
+
+exclude:
+  - "/vendor/"
+
+# Site settings
+title: Jaden Space
+subtitle: "프론트엔드 개발에 필요한 정보 및 이슈 정리 포스트."
+email: yeonhokr@gmail.com
+name: Jaden
+description: css3 | javascript | jQuery | Tweenmax | nodeJS | Gulp | Webpack | React
+# Base URL of site (i.e. /blog). It should always start with a slash,
+# and never end with a slash. Set it to a blank value if hosting at the
+# root of your server.
+baseurl: "" # the subpath of your site, e.g. /blog/
+url: "https://jadenspace.github.io" # the base hostname & protocol for your site
+cover: "/assets/header_image.jpg"
+logo: "/assets/logo.png"
+
+# Build settings
+markdown: kramdown
+paginate: 5
+paginate_path: "/page:num/"
+inter_post_navigation: true
+highlightjs_theme: "monokai-sublime"
+
+# Archive settings (see https://github.com/jekyll/jekyll-archives/)
+#jekyll-archives:
+#  enabled:
+#    - categories
+#    - tags
+#  layout: 'archive'
+#  permalinks:
+#    category: '/category/:name/'
+#    tag: '/tag/:name/'
+
+# Disqus comments
+disqus_shortname: kimyeon-ho-1
+
+# Google analytics
+# ga_tracking_id: "UA-XXXX-1"
+
+# Category descriptions (for archive pages)
+#descriptions:
+#  - cat: Jekyll
+#    desc: "Posts describing Jekyll setup techniques."
+#
+#  - cat: Dummy
+#    desc: "Just some placeholder posts, lorem ipsum and the rest."
+
+# Social icons and sharing options
+#
+# Social settings are used in two places:
+# * In the footer, as links to your personal profiles
+# * After each blog post for sharing widgets
+#
+# Example:
+#
+# social:
+#   - name: Twitter                         # Name of the service
+#     icon: twitter                         # Font Awesome icon to use (minus fa- prefix)
+#     username: "@TheBenCentra"             # (User) Name to display in the footer link
+#     url: https://twitter.com/TheBenCentra # URL of your profile (leave blank to not display in footer)
+#     desc: Follow me on Twitter            # Description to display as link title, etc
+#     share: true                           # Include in the "Share" section of posts
+social:
+  - name: GitHub
+    icon: github
+    username: Works Storage
+    url: https://github.com/jadenspace
+    desc: Fork me on GitHub
+    share: true
+
+  - name: Twitter
+    icon: twitter
+    username: jaden
+    url:
+    desc:
+    share: true
+
+  - name: Facebook
+    icon: facebook
+    username: jaden
+    url:
+    desc:
+    share: true
+
+  - name: LinkedIn
+    icon: linkedin
+    username: jaden
+    url:
+    desc:
+    share: true
+
+  - name: Google+
+    icon: google-plus
+    username: jaden
+    url:
+    desc:
+    share: true
+
+  - name: YouTube
+    icon: youtube
+    username: jaden
+    url:
+    desc:
+    share: false
+
+  - name: Instagram
+    icon: instagram
+    username: jaden
+    url:
+    desc:
+    share: false
+
+  - name: Pinterest
+    icon: pinterest
+    username: jaden
+    url:
+    desc:
+    share: true
+
+  - name: SoundCloud
+    icon: soundcloud
+    username: jaden
+    url:
+    desc:
+    share: false
+
+  - name: Tumblr
+    icon: tumblr
+    username: jaden
+    url:
+    desc:
+    share: false
+
+  - name: Steam
+    icon: steam
+    username: jaden
+    url:
+    desc:
+    share: false
+
+  - name: Dribbble
+    icon: dribbble
+    username: jaden
+    url:
+    desc:
+    share: false
+
+  - name: Vimeo
+    icon: vimeo-square
+    username: jaden
+    url:
+    desc:
+    share: false
+
+  - name: Vine
+    icon: vine
+    username: jaden
+    url:
+    desc:
+    share: false
+
+  - name: Reddit
+    icon: reddit
+    username: jaden
+    url:
+    desc:
+    share: false
+
+  - name: "Hacker News"
+    icon: hacker-news
+    username:
+    url:
+    desc: Share to Hacker News
+    share: false
+
+# Social sharing protocols
+# These are for automatically generating sharing metadata for FB and Twitter
+# OS Protocol is for sharing the source of your site, if you're interested. For more, see osprotocol.com
+protocols:
+    fb_image: "/assets/header_image.jpg"
+    fb_image_width: 1200
+    fb_image_height: 630
+    fb_image_type: "image/jpg"
+
+    twitter_image: "/assets/header_image.jpg"
+
+    os_repo: "https://github.com/jadenspace/jadenspace.github.io"
+    os_rcs_type: "git"
+    os_src: "git@github.com:jadenspace/jadenspace.github.io.git"
