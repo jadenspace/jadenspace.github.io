@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>showcase motion test</title>
+    <style>
+        html, body {
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        #desc-container {
+            max-width: 500px;
+            max-height: 500px;
+            min-width: 200px;
+            min-height: 250px;
+            background: #fff;
+            color: #000;
+            border-radius: 3px;
+            overflow: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        #desc-container > iframe {
+            border: none;
+            width:100%;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="desc-container" style="display:none">
+    <iframe src="https://www.youtube.com/embed/D7icsuamx5E"></iframe>
+    <div class="title">China's Forgotten War</div>
+    <div class="text">WWII came to the small town of Tai’erzhuang in central China – and it was never the same again. The town was strategically placed, on the north-south transport railway corridor and the ancient Grand Canal, and so was a focus of the Japanese Imperial army as it advanced. Li Jing Shan was only a child when his family fled the fighting. They returned to find their home, and most of the town, in ruins.</div>
+</div>
+
+<script src="http://otckserver.cafe24.com/jaden/showcase/js/three.min.js"></script>
+<script src="http://otckserver.cafe24.com/jaden/showcase/js/panolens.min.js"></script>
+<script>
+
+    const panorama = new PANOLENS.ImagePanorama( 'http://otckserver.cafe24.com/jaden/showcase/img/img02.jpg' );
+    // const ponorama = new PANOLENS.GoogleStreetviewPanorama( 'rY5ZW6S3sFUAAAAGOzOdpg' );
+
+    const infospot = new PANOLENS.Infospot();
+    infospot.position.set( 5000.00, -665.23, -3996.49 );
+    infospot.addHoverText( 'The Where Is Bar' ); // text, delta
+
+    const infospot2 = new PANOLENS.Infospot();
+    infospot2.position.set( -5000.00, -1825.25, 197.56 );
+    infospot2.addHoverElement( document.getElementById('desc-container'), 200 ); // el, delta
+
+    // Get Google Map API Key - https://developers.google.com/maps/documentation/javascript/get-api-key
+    // panorama = new PANOLENS.GoogleStreetviewPanorama( 'rY5ZW6S3sFUAAAAGOzOdpg' );
+    panorama.add(infospot);
+    panorama.add(infospot2);
+
+    const viewer = new PANOLENS.Viewer();
+    viewer.add( panorama );
+
+</script>
+</body>
+</html>
