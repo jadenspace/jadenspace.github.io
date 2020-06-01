@@ -13,8 +13,6 @@
         }
 
         #cardsWrapper{
-            display: flex;
-            justify-content: space-between;
             width: 700px;
 
         }
@@ -75,7 +73,6 @@
 
 <div id="mainWrapper">
     <div id="cardsWrapper">
-
         <div class="card">
             <div class="image first">
                 <div class="screen"></div>
@@ -87,6 +84,8 @@
         </div>
     </div>
 </div>
+<br>
+<p id="testa" style="font-size:40px;">0</p>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
@@ -118,9 +117,7 @@
 
                 // var rY = Math.min(20,Math.max(-20,alpha));
                 var rY = alpha / 4;
-
-                console.log(rY);
-                // console.log(rX);
+                $("#testa")[0].innerHTML = rY;
                 $(".card").children(".image").css("transform", "rotateY(" + rY + "deg)" + " " + "rotateX(" + 0 + "deg)");
 
             }, false);
