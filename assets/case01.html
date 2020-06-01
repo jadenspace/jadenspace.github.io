@@ -14,8 +14,10 @@
         }
 
         #cardsWrapper{
-            width: 700px;
-
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .card{
@@ -91,6 +93,11 @@
 
 
 <script type="text/javascript">
+    var isMobile = /LG|SAMSUNG|Samsung|iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i.test(navigator.userAgent);
+    var isAndroid = /Android/i.test(navigator.userAgent);
+    var isIOS = !/Android/i.test(navigator.userAgent) && /iPhone|iPad|iPod/i.test(navigator.userAgent);
+    var card = $(".card");
+
     function init(){
         //Find out Div Element
         var dataContainerOrientation = document.getElementById('dataContainerOrientation');
@@ -99,7 +106,7 @@
 
         var alpha,beta,gamma;
         //가속도계가 기기의 방향의 변화를 감지 했을때
-        if(window.DeviceOrientationEvent){
+        if(window.DeviceOrientationEvent) {
             //이벤트 리스너 등록
             window.addEventListener('deviceorientation', function(event) {
                 var absolute = event.absolute;
@@ -116,10 +123,23 @@
 
 
                 var rY = gamma.toFixed(2);
-                var rX = (beta % 90).toFixed(2);
-                $(".card").children(".image").css("transform", "rotateY(" + rY + "deg)" + " " + "rotateX(" + -rX + "deg)");
+                var rX = alpha.toFixed(2);
+                card.children(".image").css("transform", "rotateY(" + rY + "deg)" + " " + "rotateX(" + -rX + "deg)");
 
             }, false);
+        } else {
+            if (isMobile) {
+                alert('ios!!!');
+            }
+            card.on('touchmove', function (e) {
+                var x = e.pageX - $(this).offset().left + $(window).scrollLeft();
+                var y = e.pageY - $(this).offset().top + $(window).scrollTop();
+
+                var rY = map(x, 0, $(".card").width(), -17, 17);
+                var rX = map(y, 0, $(".card").height(), -17, 17);
+
+                $(this).children(".image").css("transform", "rotateY(" + rY + "deg)" + " " + "rotateX(" + -rX + "deg)");
+            });
         }
 
         //가속도에 변화가 발생 할때
@@ -134,31 +154,33 @@
         }
 
 
-        var card = $(".card");
-        card.on('mousemove', function (e) {
-            var x = e.clientX - $(this).offset().left + $(window).scrollLeft();
-            var y = e.clientY - $(this).offset().top + $(window).scrollTop();
 
-            var rY = map(x, 0, $(".card").width(), -17, 17);
-            var rX = map(y, 0, $(".card").height(), -17, 17);
+        if (!isMobile) {
+            card.on('mousemove', function (e) {
+                var x = e.clientX - $(this).offset().left + $(window).scrollLeft();
+                var y = e.clientY - $(this).offset().top + $(window).scrollTop();
 
-            $(this).children(".image").css("transform", "rotateY(" + rY + "deg)" + " " + "rotateX(" + -rX + "deg)");
-        });
+                var rY = map(x, 0, $(".card").width(), -17, 17);
+                var rX = map(y, 0, $(".card").height(), -17, 17);
 
-        card.on('mouseenter', function () {
-            $(this).children(".image").css({
-                transition: "all " + 0.05 + "s" + " linear",
-            });
-        });
-
-        card.on('mouseleave', function () {
-            $(this).children(".image").css({
-                transition: "all " + 0.2 + "s" + " linear",
+                $(this).children(".image").css("transform", "rotateY(" + rY + "deg)" + " " + "rotateX(" + -rX + "deg)");
             });
 
-            $(this).children(".image").css("transform", "rotateY(" + 0 + "deg)" + " " + "rotateX(" + 0 + "deg)");
-        });
+            card.on('mouseenter', function () {
+                $(this).children(".image").css({
+                    transition: "all " + 0.05 + "s" + " linear",
+                });
+            });
 
+            card.on('mouseleave', function () {
+                $(this).children(".image").css({
+                    transition: "all " + 0.2 + "s" + " linear",
+                });
+
+                $(this).children(".image").css("transform", "rotateY(" + 0 + "deg)" + " " + "rotateX(" + 0 + "deg)");
+            });
+
+        }
         function map(x, in_min, in_max, out_min, out_max) {
             return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
         }
