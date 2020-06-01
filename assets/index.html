@@ -112,9 +112,12 @@
                 // var rY = map(alpha, -180, 180, -17, 17);
                 // var rX = map(beta, -90, 90, -17, 17);
                 // alpha ==== -90,90
-                var rY = Math.min(20,Math.max(-20,alpha));
                 // var rY = Math.min(30,Math.max(-30,map(alpha, -180, 180, -180, 180)));
                 // var rX = Math.abs(Math.min(30,Math.max(-30,map(beta, -90, 90, -90, 90))));
+
+
+                // var rY = Math.min(20,Math.max(-20,alpha));
+                var rY = alpha / 4;
 
                 console.log(rY);
                 // console.log(rX);
