@@ -116,8 +116,8 @@
 
 
                 // var rY = Math.min(20,Math.max(-20,alpha));
-                var rY = alpha / 4;
-                $("#testa")[0].innerHTML = rY;
+                var rY = (alpha / 4).toFixed(2);
+                $("#testa")[0].innerHTML = alpha;
                 $(".card").children(".image").css("transform", "rotateY(" + rY + "deg)" + " " + "rotateX(" + 0 + "deg)");
 
             }, false);
