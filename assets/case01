@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>스마트폰 자이로 센서를 이용한 디바이스 컨트롤 </title>
+    <style type="text/css">
+        #mainWrapper{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 350px;
+        }
+
+        #cardsWrapper{
+            width: 700px;
+
+        }
+
+        .card{
+            width: 300px;
+            height: 175px;
+            perspective: 500px;
+            position: relative;
+        }
+
+        .image{
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+        //transform: rotateX(30deg) rotateY(30deg);
+        }
+
+        .image.first{
+            background-image: url("https://c1.staticflickr.com/1/343/31652757460_b2b5794a51_n.jpg");
+        }
+
+        .image.second{
+            background-image: url("https://c2.staticflickr.com/2/1506/25121644830_2d768ef51a_n.jpg");
+        }
+
+        .screen{
+            background-color: rgba(0, 0, 0, 0.22);
+            width: 100%;
+            height: 100%;
+            transform: translateZ(30px) scale(0.940);
+        }
+
+        .text{
+            position: absolute;
+            bottom: 25px;
+            left: 30px;
+            color: white;
+            transform: translateZ(30px) scale(0.940);
+        }
+
+        .text p{
+            cursor: default;
+            padding: 0;
+            margin: 0;
+        }
+
+        .text p:first-of-type{
+            font-size: 2em;
+            margin-bottom: 5px;
+        }
+        .text p:last-of-type{
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body onload="init()">
+
+<div id="mainWrapper">
+    <div id="cardsWrapper">
+        <div class="card">
+            <div class="image first">
+                <div class="screen"></div>
+                <div class="text">
+                    <p>Mountain</p>
+                    <p>5 Days</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+
+<script type="text/javascript">
+    function init(){
+        //Find out Div Element
+        var dataContainerOrientation = document.getElementById('dataContainerOrientation');
+        var dataContainerMotion = document.getElementById('dataContainerMotion');
+
+
+        var alpha,beta,gamma;
+        //가속도계가 기기의 방향의 변화를 감지 했을때
+        if(window.DeviceOrientationEvent){
+            //이벤트 리스너 등록
+            window.addEventListener('deviceorientation', function(event) {
+                var absolute = event.absolute;
+                alpha = event.alpha;
+                beta = event.beta; //(-180, 180)
+                gamma = event.gamma; //(-90, 90)
+
+
+                // var rY = map(alpha, -180, 180, -17, 17);
+                // var rX = map(beta, -90, 90, -17, 17);
+                // alpha ==== -90,90
+                // var rY = Math.min(30,Math.max(-30,map(gamma, -180, 180, -180, 180)));
+                // var rX = Math.abs(Math.min(30,Math.max(-30,map(beta, -90, 90, -90, 90))));
+
+
+                var rY = gamma.toFixed(2);
+                var rX = (beta % 90).toFixed(2);
+                $(".card").children(".image").css("transform", "rotateY(" + rY + "deg)" + " " + "rotateX(" + -rX + "deg)");
+
+            }, false);
+        }
+
+        //가속도에 변화가 발생 할때
+
+        if(window.DeviceMotionEvent){
+            window.addEventListener('devicemotion', function(event){
+                var x,y,z;
+                x = event.accelerationIncludingGravity.x;
+                y = event.accelerationIncludingGravity.y;
+                z = event.accelerationIncludingGravity.z;
+            }, true);
+        }
+
+
+        var card = $(".card");
+        card.on('mousemove', function (e) {
+            var x = e.clientX - $(this).offset().left + $(window).scrollLeft();
+            var y = e.clientY - $(this).offset().top + $(window).scrollTop();
+
+            var rY = map(x, 0, $(".card").width(), -17, 17);
+            var rX = map(y, 0, $(".card").height(), -17, 17);
+
+            $(this).children(".image").css("transform", "rotateY(" + rY + "deg)" + " " + "rotateX(" + -rX + "deg)");
+        });
+
+        card.on('mouseenter', function () {
+            $(this).children(".image").css({
+                transition: "all " + 0.05 + "s" + " linear",
+            });
+        });
+
+        card.on('mouseleave', function () {
+            $(this).children(".image").css({
+                transition: "all " + 0.2 + "s" + " linear",
+            });
+
+            $(this).children(".image").css("transform", "rotateY(" + 0 + "deg)" + " " + "rotateX(" + 0 + "deg)");
+        });
+
+        function map(x, in_min, in_max, out_min, out_max) {
+            return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+        }
+
+    }
+
+
+
+</script>
+
+</body>
+</html>
