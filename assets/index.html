@@ -111,13 +111,13 @@
                 // var rY = map(alpha, -180, 180, -17, 17);
                 // var rX = map(beta, -90, 90, -17, 17);
                 // alpha ==== -90,90
-                // var rY = Math.min(30,Math.max(-30,map(alpha, -180, 180, -180, 180)));
+                // var rY = Math.min(30,Math.max(-30,map(gamma, -180, 180, -180, 180)));
                 // var rX = Math.abs(Math.min(30,Math.max(-30,map(beta, -90, 90, -90, 90))));
 
 
-                // var rY = Math.min(20,Math.max(-20,alpha));
-                var rY = (alpha / 4).toFixed(2);
-                $("#testa")[0].innerHTML = alpha;
+                // var rY = Math.min(20,Math.max(-20,gamma));
+                var rY = (gamma / 4).toFixed(2);
+                $("#testa")[0].innerHTML = gamma;
                 $(".card").children(".image").css("transform", "rotateY(" + rY + "deg)" + " " + "rotateX(" + 0 + "deg)");
 
             }, false);
