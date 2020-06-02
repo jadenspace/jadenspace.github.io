@@ -131,6 +131,7 @@
                 document.getElementById('num3').innerHTML = -rX;
 
                 $(cube).find('.cube__face--back')[0].style.transform = "rotateY(" + rY + "deg)" + " " + "rotateX(" + -rX + "deg)";
+                $(cube).find('.cube__face--back')[0].style.transition = "all " + 0.2 + "s" + " linear";
 
             }, false);
         } else {
@@ -145,6 +146,7 @@
                 var rX = map(y, 0, $(cube).height(), -17, 17);
 
                 cube.style.transform = "rotateY(" + -rY + "deg)" + " " + "rotateX(" + -rX + "deg)";
+                cube.style.transition = "all " + 0.25 + "s" + " linear";
             });
         }
 
@@ -173,7 +175,7 @@
 
             $(scene).on('mouseenter', function () {
                 $(cube).css({
-                    transition: "all " + 0.15 + "s" + " linear"
+                    transition: "all " + 0.25 + "s" + " linear"
                 });
             });
 
