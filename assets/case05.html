@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * { box-sizing: border-box; margin:0;padding:0;}
+
+        body { overflow:hidden; font-family: sans-serif; }
+
+        .scene {
+            width: 100vw;
+            max-width: 1200px;
+            height: 100vh;
+            max-height: 1200px;
+            perspective: 500px;
+        }
+        @media screen and (max-width: 768px) {
+            .scene {
+                width: 100vw;
+                height: 100vh;
+                perspective: 400px;
+            }
+        }
+
+        .front {
+            position: absolute;
+            top:0;
+            width:100%;
+            height:100%;
+            background: url(https://jadenspace.github.io/assets/interface02.png) no-repeat 50% 50%;
+            background-size:contain;
+        }
+
+        .cube {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: translateZ(0);
+        }
+        @media screen and (max-width: 768px) {
+            .cube {
+                transform: translateZ(0);
+            }
+        }
+
+        .cube__face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            font-size: 40px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+        }
+
+        /*.cube__face--front  { background: url() no-repeat 0 0; opacity:.5;}*/
+        .cube__face--back   { top:50vw;left:50%;width:150%;height:150%;margin:-75% 0 0 -75%; background: url(./img/bg01.jpg) no-repeat 0 0; }
+        /*.cube__face--back   { top:50vw;left:50%;width:150%;height:150%;margin:-75% 0 0 -75%;  }*/
+        /*.cube__face--back video {position:absolute;top:0;left:0;right:0;bottom:0;height:100%;margin:auto;}*/
+
+        .cube__face--front  { transform: rotateY(0deg) translateZ(0); }
+        .cube__face--back   { transform: rotateY(0deg) translateZ(-15vw); }
+        @media screen and (max-width: 768px) {
+            .cube__face--back {
+                transform: rotateY(0deg) translateZ(-10vw);
+            }
+
+            .cube__face--front,
+            .cube__face--back {
+                background-size: 100% 100%;
+            }
+
+            .cube.is-backface-hidden .cube__face {
+                backface-visibility: hidden;
+            }
+        }
+    </style>
+</head>
+<body>
+<p id="num1" style="position:fixed;top:0;left:0;z-index:10;color:white;font-size:30px;"></p>
+<p id="num2" style="position:fixed;top:20px;left:0;z-index:10;color:white;font-size:30px;"></p>
+<p id="num3" style="position:fixed;top:40px;left:0;z-index:10;color:white;font-size:30px;"></p>
+<div class="scene">
+    <div class="cube">
+        <div class="cube__face cube__face--front"></div>
+        <div class="cube__face cube__face--back"></div>
+    </div>
+    <div class="front" style="z-index: 5;">
+        <p class="a1" style="position:absolute;top:15%;left:5%;color:white;font-size:60px;text-align:left;">02:07<br><span style="font-size:40px">6월 3일 수요일</span></p>
+        <p class="a2" style="position:absolute;top:25%;left:5%;color:white;font-size:40px;text-align:left;"></p>
+    </div>
+</div>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script type="text/javascript">
+    var isMobile = /LG|SAMSUNG|Samsung|iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i.test(navigator.userAgent);
+    var isAndroid = /Android/i.test(navigator.userAgent);
+    var isIOS = !/Android/i.test(navigator.userAgent) && /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+
+    var scene = document.querySelector('.scene');
+    var cube = document.querySelector('.cube');
+
+    function updatePerspectiveOrigin(originX, originY) {
+        scene.style.perspectiveOrigin = (50 + originX) + '% ' + (50 + originY) + '%';
+    }
+
+    function init(){
+        //Find out Div Element
+        var dataContainerOrientation = document.getElementById('dataContainerOrientation');
+        var dataContainerMotion = document.getElementById('dataContainerMotion');
+
+
+        var alpha,beta,gamma;
+        //가속도계가 기기의 방향의 변화를 감지 했을때
+        if(window.DeviceOrientationEvent) {
+            //이벤트 리스너 등록
+            function betaCalc(n) {
+                var int = parseInt(n / 45) % 2 === 0 ? 1 : -1;
+                var rest = Math.abs(n % 45);
+                return int * rest;
+            }
+            window.addEventListener('deviceorientation', function(event) {
+                var absolute = event.absolute;
+                alpha = event.alpha;
+                beta = event.beta; //(-180, 180)
+                gamma = event.gamma; //(-90, 90)
+
+                var rY = Math.max(-10,Math.min(10,map(gamma, -90, 90, -30, 30).toFixed(2) / 1));
+                var rX = Math.max(-5,Math.min(5,map(betaCalc(beta), -45, 45, -5, 5).toFixed(2) / 1));
+
+                // document.getElementById('num1').innerHTML = beta.toFixed(4);
+                // document.getElementById('num2').innerHTML = rY;
+                // document.getElementById('num3').innerHTML = rX;
+
+                updatePerspectiveOrigin(rY*2.5, rX*2.5);
+                // cube.style.transform = "rotateY(" + rY + "deg)" + " " + "rotateX(" + -rX + "deg)";
+                
+
+            }, false);
+        } else {
+            if (isMobile) {
+                alert('ios!!!');
+            }
+            $(cube).on('touchmove', function (e) {
+                var x = e.pageX - $(this).offset().left + $(window).scrollLeft();
+                var y = e.pageY - $(this).offset().top + $(window).scrollTop();
+
+                var rY = map(x, 0, $(cube).width(), -17, 17);
+                var rX = map(y, 0, $(cube).height(), -17, 17);
+
+                cube.style.transform = "rotateY(" + -rY + "deg)" + " " + "rotateX(" + -rX + "deg)";
+            });
+        }
+
+        //가속도에 변화가 발생 할때
+
+        if(window.DeviceMotionEvent){
+            window.addEventListener('devicemotion', function(event){
+                var x,y,z;
+                x = event.accelerationIncludingGravity.x;
+                y = event.accelerationIncludingGravity.y;
+                z = event.accelerationIncludingGravity.z;
+            }, true);
+        }
+
+        if (!isMobile) {
+            $(scene).on('mousemove', function (e) {
+                var x = e.clientX - $(this).offset().left + $(window).scrollLeft();
+                var y = e.clientY - $(this).offset().top + $(window).scrollTop();
+
+                var rY = map(x, 0, $(scene).width(), -10, 10).toFixed(2) / 1;
+                var rX = map(y, 0, $(scene).height(), -10, 10).toFixed(2) / 1;
+
+                updatePerspectiveOrigin(-rY, -rX);
+                // cube.style.transform = "rotateY(" + -rY + "deg)" + " " + "rotateX(" + -rX + "deg)";
+            });
+
+            $(scene).on('mouseenter', function () {
+                $(cube).css({
+                    transition: "all " + 0.15 + "s" + " linear"
+                });
+            });
+
+            $(scene).on('mouseleave', function () {
+                // $(this).children(".image").css({
+                //     transition: "all " + 0.2 + "s" + " linear",
+                // });
+
+                // updatePerspectiveOrigin(0, 0);
+                cube.style.transform = "rotateY(" + 0 + "deg)" + " " + "rotateX(" + -0 + "deg)";
+            });
+
+        }
+        function map(x, in_min, in_max, out_min, out_max) {
+            return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+        }
+
+    }
+
+    window.onload = init();
+
+</script>
+
+
+</body>
+</html>
