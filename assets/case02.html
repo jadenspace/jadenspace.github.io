@@ -24,6 +24,13 @@
             margin:auto;
             perspective: 500px;
         }
+        @media screen and (max-width: 768px) {
+            .scene {
+                width: 100vw;
+                height: 100vw;
+                perspective: 400px;
+            }
+        }
 
         .cube {
             position: relative;
@@ -32,9 +39,9 @@
             transform-style: preserve-3d;
             transform: translateZ(35vw);
         }
-        @media screen and (width: 768px) {
+        @media screen and (max-width: 768px) {
             .cube {
-                transform: translateZ(25vw);
+                transform: translateZ(50vw);
             }
         }
 
@@ -58,6 +65,9 @@
         .cube__face--front  { transform: rotateY(  0deg) translateZ(0); }
         .cube__face--right  { transform: rotateY(-90deg) translateZ(0); transform-origin:right; }
         .cube__face--back   { transform: rotateY(0deg) translateZ(-50vw); }
+        @media screen and (max-width: 768px) {
+            .cube__face--back   { transform: rotateY(0deg) translateZ(-100vw);
+        }
         .cube__face--left   { transform: rotateY(90deg) translateZ(0); transform-origin:left;}
         .cube__face--top    { transform: rotateX(-90deg) translateZ(0); transform-origin:top;}
         .cube__face--bottom { transform: rotateX(90deg) translateZ(0); transform-origin:bottom;}
@@ -246,8 +256,8 @@
 
                 // var rY = Math.min(30,Math.max(-30,gamma.toFixed(2)));
                 // var rX = Math.min(30,Math.max(-30,alpha.toFixed(2)));
-                var rY = map(gamma, -90, 90, -30, 30).toFixed(2) / 1;
-                var rX = map(alpha, -180, 180, -30, 30).toFixed(2) / 1;
+                var rY = map(gamma, -90, 90, -50, 50).toFixed(2) / 1;
+                var rX = map(alpha, -180, 180, -50, 50).toFixed(2) / 1;
 
                 updatePerspectiveOrigin(rY, rX);
                 // card.children(".image").css("transform", "rotateY(" + rY + "deg)" + " " + "rotateX(" + -rX + "deg)");
