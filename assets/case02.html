@@ -257,7 +257,7 @@
                 // var rY = Math.min(30,Math.max(-30,gamma.toFixed(2)));
                 // var rX = Math.min(30,Math.max(-30,alpha.toFixed(2)));
                 var rY = map(gamma, -90, 90, -50, 50).toFixed(2) / 1;
-                var rX = map(alpha, -180, 180, -50, 50).toFixed(2) / 1;
+                var rX = map(beta, -180, 180, -50, 50).toFixed(2) / 1;
 
                 updatePerspectiveOrigin(rY, rX);
                 // card.children(".image").css("transform", "rotateY(" + rY + "deg)" + " " + "rotateX(" + -rX + "deg)");
