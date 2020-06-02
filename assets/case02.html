@@ -9,7 +9,7 @@
     <style>
         * { box-sizing: border-box; }
 
-        body { font-family: sans-serif; }
+        body { overflow:hidden; font-family: sans-serif; }
 
         .scene {
             position:absolute;
@@ -55,7 +55,7 @@
             text-align: center;
         }
 
-        .cube__face--front  { background: url(https://jadenspace.github.io/assets/nz.png) no-repeat 0 0; opacity:0}
+        /*.cube__face--front  { background: url(https://jadenspace.github.io/assets/nz.png) no-repeat 0 0;}*/
         .cube__face--right  { background: url(https://jadenspace.github.io/assets/px.png) no-repeat 0 0; }
         .cube__face--back   { background: url(https://jadenspace.github.io/assets/pz.png) no-repeat 0 0; }
         .cube__face--left   { background: url(https://jadenspace.github.io/assets/nx.png) no-repeat 0 0; }
@@ -88,7 +88,9 @@
 
 <div class="scene">
     <div class="cube">
-        <div class="cube__face cube__face--front"></div>
+        <div class="cube__face cube__face--front">
+            <p style="color:white;font-weight:bold;font-size:50px;line-height:.8;">G<br/>a<br/>l<br/>a<br/>x<br/>y</p>
+        </div>
         <div class="cube__face cube__face--back"></div>
         <div class="cube__face cube__face--right"></div>
         <div class="cube__face cube__face--left"></div>
