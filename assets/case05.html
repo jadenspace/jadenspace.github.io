@@ -122,9 +122,7 @@
         if(window.DeviceOrientationEvent) {
             //이벤트 리스너 등록
             function betaCalc(n) {
-                var int = parseInt(n / 45) % 2 === 0 ? 1 : -1;
-                var rest = int === 1 ? Math.abs(n % 45) : Math.abs(45 % n);
-                return int * rest;
+                return Math.max(-90,Math.min(90,90-n));
             }
             window.addEventListener('deviceorientation', function(event) {
                 var absolute = event.absolute;
@@ -133,15 +131,14 @@
                 gamma = event.gamma; //(-90, 90)
 
                 var rY = map(gamma, -90, 90, -30, 30).toFixed(2) / 1;
-                var rX = map(betaCalc(beta), -45, 45, -5, 5).toFixed(2) / 1;
-                // todo: -45 45 계산하기!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                var rX = map(betaCalc(beta), -90, 90, -5, 5).toFixed(2) / 1;
+                console.log(betaCalc(beta));
 
                 // document.getElementById('num1').innerHTML = beta.toFixed(4);
                 // document.getElementById('num2').innerHTML = rY;
                 // document.getElementById('num3').innerHTML = rX;
-                console.log(betaCalc(beta));
                 updatePerspectiveOrigin(-rY*5, rX*5);
-                // cube.style.transform = "rotateY(" + rY + "deg)" + " " + "rotateX(" + -rX + "deg)";
+                cube.style.transform = "rotateY(" + rY + "deg)" + " " + "rotateX(" + -rX + "deg)";
 
 
             }, false);
