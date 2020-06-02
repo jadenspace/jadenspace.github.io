@@ -59,7 +59,7 @@
         }
 
         /*.cube__face--front  { background: url() no-repeat 0 0; opacity:.5;}*/
-        .cube__face--back   { top:50vw;left:50%;width:150%;height:150%;margin:-75% 0 0 -75%; background: url(https://jadenspace.github.io/assets/bg01.jpg) no-repeat 0 0; }
+        .cube__face--back   { top:0;left:50%;width:150%;height:150%;margin:-75% 0 0 -75%; background: url(https://jadenspace.github.io/assets/bg01.jpg) no-repeat 0 0; }
         /*.cube__face--back   { top:50vw;left:50%;width:150%;height:150%;margin:-75% 0 0 -75%;  }*/
         /*.cube__face--back video {position:absolute;top:0;left:0;right:0;bottom:0;height:100%;margin:auto;}*/
 
@@ -136,7 +136,7 @@
                 // document.getElementById('num1').innerHTML = beta.toFixed(4);
                 // document.getElementById('num2').innerHTML = rY;
                 // document.getElementById('num3').innerHTML = rX;
-                updatePerspectiveOrigin(-rY*5, 0);
+                // updatePerspectiveOrigin(-rY*5, 0);
                 cube.style.transform = "rotateY(" + rY + "deg)" + " " + "rotateX(" + -rX + "deg)";
 
 
