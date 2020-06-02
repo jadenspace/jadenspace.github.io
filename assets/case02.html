@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        * { box-sizing: border-box; }
+
+        body { font-family: sans-serif; }
+
+        .scene {
+            position:absolute;
+            top:0;
+            right:0;
+            bottom:0;
+            left:0;
+            width: 50vw;
+            height: 50vw;
+            margin:auto;
+            perspective: 500px;
+        }
+
+        .cube {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            transform-style: preserve-3d;
+            transform: translateZ(35vw);
+        }
+        @media screen and (width: 768px) {
+            .cube {
+                transform: translateZ(25vw);
+            }
+        }
+
+        .cube__face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            font-size: 40px;
+            font-weight: bold;
+            color: white;
+            text-align: center;
+        }
+
+        .cube__face--front  { background: url(./img/nz.png) no-repeat 0 0; opacity:0}
+        .cube__face--right  { background: url(./img/px.png) no-repeat 0 0; }
+        .cube__face--back   { background: url(./img/pz.png) no-repeat 0 0; }
+        .cube__face--left   { background: url(./img/nx.png) no-repeat 0 0; }
+        .cube__face--top    { background: url(./img/py.png) no-repeat 0 0; }
+        .cube__face--bottom { background: url(./img/ny.png) no-repeat 0 0; }
+
+        .cube__face--front  { transform: rotateY(  0deg) translateZ(0); }
+        .cube__face--right  { transform: rotateY(-90deg) translateZ(0); transform-origin:right; }
+        .cube__face--back   { transform: rotateY(0deg) translateZ(-50vw); }
+        .cube__face--left   { transform: rotateY(90deg) translateZ(0); transform-origin:left;}
+        .cube__face--top    { transform: rotateX(-90deg) translateZ(0); transform-origin:top;}
+        .cube__face--bottom { transform: rotateX(90deg) translateZ(0); transform-origin:bottom;}
+
+        .cube__face--front,
+        .cube__face--right,
+        .cube__face--back,
+        .cube__face--left,
+        .cube__face--top,
+        .cube__face--bottom {background-size:100% 100%;}
+
+        .cube.is-backface-hidden .cube__face {
+            backface-visibility: hidden;
+        }
+    </style>
+</head>
+<body>
+
+<div class="scene">
+    <div class="cube">
+        <div class="cube__face cube__face--front"></div>
+        <div class="cube__face cube__face--back"></div>
+        <div class="cube__face cube__face--right"></div>
+        <div class="cube__face cube__face--left"></div>
+        <div class="cube__face cube__face--top"></div>
+        <div class="cube__face cube__face--bottom"></div>
+    </div>
+</div>
+<!--
+
+<p>
+    <label>
+        perspective
+        <input class="perspective-range" type="range" min="1" max="1000" value="400" data-units="px" />
+    </label>
+</p>
+<p>
+    <label>
+        perspective-origin x
+        <input class="origin-x-range" type="range" min="0" max="100" value="50" data-units="%" />
+    </label>
+</p>
+<p>
+    <label>
+        perspective-origin y
+        <input class="origin-y-range" type="range" min="0" max="100" value="50" data-units="%" />
+    </label>
+</p>
+<p>
+    <label>
+        Spin cube
+        <input class="spin-cube-checkbox" type="checkbox" />
+    </label>
+</p>
+<p>
+    <label>
+        Backface visible
+        <input class="backface-checkbox" type="checkbox" checked />
+    </label>
+</p>
+-->
+
+<!--
+<script>
+    /* ==================== RangeDisplay ==================== */
+
+    // displays the value of a range input
+    // why isn't this in the HTML5 spec?
+    function RangeDisplay( input ) {
+        this.input = input;
+        this.output = document.createElement('span');
+        this.output.className = 'range-display';
+        this.units = this.input.getAttribute('data-units') || '';
+        // events
+        var onChange = this.update.bind( this );
+        this.input.addEventListener( 'change', onChange );
+        this.input.addEventListener( 'input', onChange );
+        // set initial output
+        this.update();
+        this.input.parentNode.appendChild( this.output );
+    }
+
+    RangeDisplay.prototype.update = function() {
+        this.output.textContent = this.input.value + this.units;
+    };
+
+    /* ==================== init ==================== */
+
+    // init RangeDisplays
+    var ranges = document.querySelectorAll('input[type="range"]');
+    for ( var i=0; i < ranges.length; i++ ) {
+        new RangeDisplay( ranges[i] );
+    }
+
+
+
+    var scene = document.querySelector('.scene');
+    var cube = document.querySelector('.cube');
+    var originX = 50;
+    var originY = 50;
+
+    function updatePerspectiveOrigin() {
+        scene.style.perspectiveOrigin = originX + '% ' + originY + '%';
+    }
+
+
+
+
+
+
+
+
+
+
+    // perspective
+    var perspectiveRange = document.querySelector('.perspective-range');
+    var perspectiveDisplay = perspectiveRange.parentNode.querySelector('.range-display');
+    perspectiveRange.onchange = perspectiveRange.oninput = function() {
+        var value = perspectiveRange.value + 'px';
+        // set to none at max
+        if ( value == '1000px' ) {
+            value = 'none';
+            perspectiveDisplay.textContent = 'none';
+        }
+        scene.style.perspective = value;
+    };
+    perspectiveRange.onchange();
+
+    // origin x
+    var originXRange = document.querySelector('.origin-x-range');
+    originXRange.onchange = originXRange.oninput = function() {
+        originX = originXRange.value;
+        updatePerspectiveOrigin();
+    };
+    originXRange.onchange();
+
+    // origin y
+    var originYRange = document.querySelector('.origin-y-range');
+    originYRange.onchange = originYRange.oninput = function() {
+        originY = originYRange.value;
+        updatePerspectiveOrigin();
+    };
+    originYRange.onchange();
+
+</script>
+-->
+
+<!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>-->
+<script src="http://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script type="text/javascript">
+    var isMobile = /LG|SAMSUNG|Samsung|iPhone|iPod|Android|Windows CE|BlackBerry|Symbian|Windows Phone|webOS|Opera Mini|Opera Mobi|POLARIS|IEMobile|lgtelecom|nokia|SonyEricsson/i.test(navigator.userAgent);
+    var isAndroid = /Android/i.test(navigator.userAgent);
+    var isIOS = !/Android/i.test(navigator.userAgent) && /iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+
+    var scene = document.querySelector('.scene');
+    var cube = document.querySelector('.cube');
+
+    function updatePerspectiveOrigin(originX, originY) {
+        scene.style.perspectiveOrigin = (50 + originX) + '% ' + (50 + originY) + '%';
+    }
+
+    function init(){
+        //Find out Div Element
+        var dataContainerOrientation = document.getElementById('dataContainerOrientation');
+        var dataContainerMotion = document.getElementById('dataContainerMotion');
+
+
+        var alpha,beta,gamma;
+        //가속도계가 기기의 방향의 변화를 감지 했을때
+        if(window.DeviceOrientationEvent) {
+            //이벤트 리스너 등록
+            window.addEventListener('deviceorientation', function(event) {
+                var absolute = event.absolute;
+                alpha = event.alpha;
+                beta = event.beta; //(-180, 180)
+                gamma = event.gamma; //(-90, 90)
+
+
+                // var rY = map(alpha, -180, 180, -17, 17);
+                // var rX = map(beta, -90, 90, -17, 17);
+                // alpha ==== -90,90
+                // var rY = Math.min(30,Math.max(-30,map(gamma, -180, 180, -180, 180)));
+                // var rX = Math.abs(Math.min(30,Math.max(-30,map(beta, -90, 90, -90, 90))));
+
+
+                // var rY = Math.min(30,Math.max(-30,gamma.toFixed(2)));
+                // var rX = Math.min(30,Math.max(-30,alpha.toFixed(2)));
+                var rY = map(gamma, -90, 90, -30, 30).toFixed(2) / 1;
+                var rX = map(alpha, -180, 180, -30, 30).toFixed(2) / 1;
+
+                updatePerspectiveOrigin(rY, rX);
+                // card.children(".image").css("transform", "rotateY(" + rY + "deg)" + " " + "rotateX(" + -rX + "deg)");
+
+            }, false);
+        } else {
+            if (isMobile) {
+                alert('ios!!!');
+            }
+            $(cube).on('touchmove', function (e) {
+                var x = e.pageX - $(this).offset().left + $(window).scrollLeft();
+                var y = e.pageY - $(this).offset().top + $(window).scrollTop();
+
+                var rY = map(x, 0, $(cube).width(), -17, 17);
+                var rX = map(y, 0, $(cube).height(), -17, 17);
+
+                updatePerspectiveOrigin(rY, rX);
+                // $(this).children(".image").css("transform", "rotateY(" + rY + "deg)" + " " + "rotateX(" + -rX + "deg)");
+            });
+        }
+
+        //가속도에 변화가 발생 할때
+
+        if(window.DeviceMotionEvent){
+            window.addEventListener('devicemotion', function(event){
+                var x,y,z;
+                x = event.accelerationIncludingGravity.x;
+                y = event.accelerationIncludingGravity.y;
+                z = event.accelerationIncludingGravity.z;
+            }, true);
+        }
+
+        if (!isMobile) {
+            console.log('1');
+            $(cube).on('mousemove', function (e) {
+                var x = e.clientX - $(this).offset().left + $(window).scrollLeft();
+                var y = e.clientY - $(this).offset().top + $(window).scrollTop();
+
+                var rY = map(x, 0, $(cube).width(), -17, 17).toFixed(2);
+                var rX = map(y, 0, $(cube).height(), -17, 17).toFixed(2);
+
+                updatePerspectiveOrigin(-rY, -rX);
+                // $(this).children(".image").css("transform", "rotateY(" + rY + "deg)" + " " + "rotateX(" + -rX + "deg)");
+            });
+
+            $(cube).on('mouseenter', function () {
+                $(this).children(".image").css({
+                    transition: "all " + 0.05 + "s" + " linear",
+                });
+            });
+
+            $(cube).on('mouseleave', function () {
+                // $(this).children(".image").css({
+                //     transition: "all " + 0.2 + "s" + " linear",
+                // });
+
+                // updatePerspectiveOrigin(0, 0);
+                // $(this).children(".image").css("transform", "rotateY(" + 0 + "deg)" + " " + "rotateX(" + 0 + "deg)");
+            });
+
+        }
+        function map(x, in_min, in_max, out_min, out_max) {
+            return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+        }
+
+    }
+
+    window.onload = init();
+
+</script>
+
+
+</body>
+</html>
