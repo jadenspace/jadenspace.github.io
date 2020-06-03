@@ -29,7 +29,8 @@
             top:0;
             width:100%;
             height:100%;
-            text-align:center;
+            background: url(https://jadenspace.github.io/assets/interface02.png) no-repeat 50% 50%;
+            background-size:contain;
         }
         @media screen and (max-width: 768px) {
             .scene {
@@ -73,7 +74,7 @@
         .cube__face--right  { transform: rotateY(-90deg) translateZ(0); transform-origin:right; }
         .cube__face--back   { transform: rotateY(0deg) translateZ(-50vw); }
         @media screen and (max-width: 768px) {
-            .cube__face--back   { transform: rotateY(0deg) translateZ(-100vw);
+            .cube__face--back   { transform: rotateY(0deg) translateZ(-100vw); }
         }
         .cube__face--left   { transform: rotateY(90deg) translateZ(0); transform-origin:left;}
         .cube__face--top    { transform: rotateX(-90deg) translateZ(0); transform-origin:top;}
@@ -102,8 +103,9 @@
         <div class="cube__face cube__face--top"></div>
         <div class="cube__face cube__face--bottom"></div>
     </div>
-    <div class="front">
-        <p style="color:white;font-weight:bold;font-size:50px;line-height:1;">G<br/>A<br/>L<br/>A<br/>X<br/>Y</p>
+    <div class="front" style="z-index:5;">
+        <p class="a1" style="position:absolute;top:15%;left:5%;color:white;font-size:60px;text-align:left;">02:07<br><span style="font-size:40px">6월 3일 수요일</span></p>
+        <p class="a2" style="position:absolute;top:25%;left:5%;color:white;font-size:40px;text-align:left;"></p>
     </div>
 </div>
 <!--
