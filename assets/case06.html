@@ -131,9 +131,9 @@
                 var rY = Math.max(-10,Math.min(10,map(gamma, -90, 90, -20, 20).toFixed(2) / 1));
                 var rX = Math.max(-10,Math.min(10,map(betaCalc(beta), -45, 45, -15, 15).toFixed(2) / 1));
 
-                document.getElementById('num1').innerHTML = beta.toFixed(4);
-                document.getElementById('num2').innerHTML = rY;
-                document.getElementById('num3').innerHTML = rX;
+                document.getElementById('num1').innerHTML = alpha.toFixed(4);
+                document.getElementById('num2').innerHTML = beta.toFixed(4);
+                document.getElementById('num3').innerHTML = gamma.toFixed(4);
 
                 updatePerspectiveOrigin(-rY*2, -rX*2);
                 $(cube).find('.cube__face--back')[0].style.transform = "rotateY(" + rY + "deg)" + " " + "rotateX(" + -rX + "deg)";
