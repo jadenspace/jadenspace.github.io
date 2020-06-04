@@ -79,6 +79,8 @@
 <p id="num1" style="position:fixed;top:0;left:0;z-index:10;color:white;font-size:30px;"></p>
 <p id="num2" style="position:fixed;top:20px;left:0;z-index:10;color:white;font-size:30px;"></p>
 <p id="num3" style="position:fixed;top:40px;left:0;z-index:10;color:white;font-size:30px;"></p>
+<p id="num4" style="position:fixed;top:60px;left:0;z-index:10;color:green;font-size:30px;"></p>
+<p id="num5" style="position:fixed;top:80px;left:0;z-index:10;color:green;font-size:30px;"></p>
 <div class="scene">
     <div class="cube">
         <div class="cube__face cube__face--front"></div>
@@ -134,6 +136,8 @@
                 document.getElementById('num1').innerHTML = alpha.toFixed(4);
                 document.getElementById('num2').innerHTML = beta.toFixed(4);
                 document.getElementById('num3').innerHTML = gamma.toFixed(4);
+                document.getElementById('num4').innerHTML = rY;
+                document.getElementById('num5').innerHTML = rX;
 
                 updatePerspectiveOrigin(-rY*2, -rX*2);
                 $(cube).find('.cube__face--back')[0].style.transform = "rotateY(" + rY + "deg)" + " " + "rotateX(" + -rX + "deg)";
