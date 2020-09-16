@@ -1,0 +1,74 @@
+﻿<krpano version="1.20.7" title="">
+	<action name="startup" autorun="onstart">
+
+		if(device.panovideosupport == false,
+		error('Sorry, but panoramic videos are not supported by your current browser!');
+		,
+		loadscene(scene_pengtai-16-1);
+		);
+	</action>
+	<plugin name="gyro" devices="html5"
+			url="plugins/gyro2.js"
+			enabled="true"
+			keep="true"
+			onavailable="gyro_available_info();"
+			onunavailable="gyro_not_available_info();"
+			softstart="1"
+	/>
+
+	<action name="gyro_available_info">
+		set(layer[infotext].html, 'Gyroscope available, press the gyro button...');
+		set(layer[gyrobutton].visible, true);
+	</action>
+
+	<action name="gyro_not_available_info" xautorun.flash="onstart">
+		set(layer[infotext].html, 'No gyroscope available...');
+	</action>
+
+
+	<action name="gyro_available_info">
+		set(layer[infotext].html, 'Gyroscope available, press the gyro button...');
+		set(layer[gyrobutton].visible, true);
+	</action>
+	<action name="gyro_not_available_info" xautorun.flash="onstart">
+		set(layer[infotext].html, 'No gyroscope available...');
+	</action>
+	<!-- <view hlookat="0.0" vlookat="0.0" fovtype="MFOV" fov="120" maxpixelzoom="2.0" fovmin="70" fovmax="140" limitview="auto" /> -->
+	<!-- <preview url="panos/pano.tiles/preview.jpg" /><image><cube url="panos/pano.tiles/pano_%s.jpg" /></image> -->
+	<plugin name="video"
+			url.html5="plugins/videoplayer.js"
+			url.flash="videoplayer.swf"
+			videourl="video/2ND_SPOT_ORIGINAL_480p.mp4"
+
+			panovideo="true"
+			pausedonstart="false"
+			loop="true"
+			volume="0.0"
+			onvideoready=""
+			onvideoplay=""
+			onvideopaused=""
+			onvideocomplete=""
+			onerror=""
+	/>
+	<image hfov="360" vfov="180">
+		<sphere url="plugin:video" />
+	</image>
+
+	<layer name="bottombar" type="container" bgcolor="0x000000" bgalpha="0.5" align="leftbottom" width="100%" height="40">
+
+		<layer name="infotext" type="text"
+			   background="false" border="false"
+			   enabled="false"
+			   html=""
+			   css="text-align:left; color:#FFFFFF; font-family:Arial; font-size:14px; font-weight:bold;"
+			   align="left" x="10" height="100%" vcenter="true"
+		/>
+
+		<layer name="gyrobutton" url="images/gyroicon.png" scale="0.5" align="right" x="10" visible="false"
+			   onclick="switch(plugin[gyro].enabled);"
+		/>
+
+	</layer>
+
+
+</krpano>
